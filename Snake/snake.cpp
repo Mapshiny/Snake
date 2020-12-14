@@ -21,28 +21,69 @@ Snake::Snake()
         SnakeBody.append(p);
     }
 }
-void Snake::MoveRight() {
-    int x = SnakeBody.last().x() + swidth + sgap;
-    //out of widget's maximum width
-    if(x >= 1500)
-        x = 0;
-    int y = SnakeBody.last().y();
-    QPoint p(x, y);
-    SnakeBody.append(p);
-    SnakeBody.removeAt(0);
-    qDebug() << "move Right...";
+void Snake::Move(int moveFlag) {
+    switch (moveFlag) {
+    case 0:
+        MoveUp();
+        break;
+    case 1:
+        MoveDown();
+        break;
+    case 2:
+        MoveLeft();
+        break;
+    case 3:
+        MoveRight();
+        break;
+    default:
+        break;
+    }
 }
 
+void Snake::MoveUp() {
+    int x = SnakeBody.last().x();
+    int y = SnakeBody.last().y() - swidth - sgap;
+
+    QPoint p = correctSnake(x, y);
+    SnakeBody.append(p);
+    SnakeBody.removeAt(0);
+
+}
 void Snake::MoveDown() {
     int x = SnakeBody.last().x();
     int y = SnakeBody.last().y() + swidth + sgap;
     //out of widget's maximun heigth
-    if(y >= 800)
-        y = 0;
-    QPoint p(x, y);
+    QPoint p = correctSnake(x, y);
     SnakeBody.append(p);
     SnakeBody.removeAt(0);
-    qDebug() << "move Forward...";
+
+}
+void Snake::MoveLeft() {
+    int x = SnakeBody.last().x() - swidth - sgap;
+    int y = SnakeBody.last().y();
+    QPoint p = correctSnake(x, y);
+    SnakeBody.append(p);
+    SnakeBody.removeAt(0);
+
+}
+void Snake::MoveRight() {
+    int x = SnakeBody.last().x() + swidth + sgap;
+    int y = SnakeBody.last().y();
+    QPoint p = correctSnake(x, y);
+    SnakeBody.append(p);
+    SnakeBody.removeAt(0);
+}
+QPoint Snake::correctSnake(int x, int y) {
+    if(x <= 0)
+        x = 1500 - swidth;
+    if(x >= 1500)
+        x = 0 + swidth;
+    if(y <= 0)
+        y = 800 - swidth;
+    if(y >= 800)
+        y = 0 + swidth;
+    QPoint p(x, y);
+    return p;
 }
 QPoint Snake::getHead() {
     return SnakeBody.last();

@@ -37,26 +37,58 @@ MainGame::~MainGame()
 void MainGame::init(){
     qDebug() << "init...";
     snake = new Snake();
-
+    moveFlag = Right;
     timer = new QTimer();
-    timer->setInterval(300);
     connect(timer, SIGNAL(timeout()), this, SLOT(testMove()));
-    timer->start();
+    timer->start(300);
 }
 void MainGame::testMove() {
-//    if(count == 0) {
-//        snake->MoveRight();
-//        count += 2;
-//        update();
-//    }
-//    else {
-//        snake->MoveFoward();
-//        count--;
-//        update();
-//    }
-    snake->MoveDown();
+    snake->Move(moveFlag);
     update();
 }
+void MainGame::keyPressEvent(QKeyEvent* event) {
+    switch (event->key()) {
+    case Qt::Key_Up:
+        qDebug() << "key up...";
+        if(moveFlag != Down)
+            moveFlag = Up;
+        break;
+
+    case Qt::Key_Down:
+        qDebug() << "key down...";
+        if(moveFlag != Up)
+            moveFlag = Down;
+        break;
+
+    case Qt::Key_Left:
+        qDebug() << "key left...";
+        if(moveFlag != Right)
+            moveFlag = Left;
+        break;
+
+    case Qt::Key_Right:
+        qDebug() << "key right...";
+        if(moveFlag != Left)
+            moveFlag = Right;
+        break;
+    case Qt::Key_Space :
+        if(event->isAutoRepeat())
+        {
+            qDebug() << timer->interval();
+            return;
+        }
+        timer->start(100);
+        break;
+    }
+}
+/*
+void MainGame::keyReleaseEvent(QKeyEvent* event) {
+    if(event->key() == Qt::Key_Space) {
+        timer->start(300);
+        return;
+    }
+}
+*/
 void MainGame::paintEvent(QPaintEvent *) {
     QPainter painter(this);
     QBrush brush;

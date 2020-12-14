@@ -7,11 +7,12 @@
 class Snake
 {
 public:
-    void MoveFoward();
+    void Move(int);
     void MoveLeft();
     void MoveRight();
     void MoveUp();
     void MoveDown();
+    QPoint correctSnake(int, int);
     QPoint getHead();
     QList<QPoint> getBody();
     Snake();
