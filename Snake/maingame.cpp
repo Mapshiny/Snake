@@ -110,11 +110,11 @@ void MainGame::keyPressEvent(QKeyEvent* event) {
         break;
 
     case Qt::Key_Escape:
-        if(timer->isActive() && snake->isAlive)
+        if(timer->isActive())
             timer->stop();
-        if(!timer->isActive() && snake->isAlive)
+        else if(snake->isAlive)
             timer->start(timerInterval);
-        if(!snake->isAlive)
+        else
             GameInit();
         break;
 

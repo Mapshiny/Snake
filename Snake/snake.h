@@ -29,7 +29,7 @@ private:
     int swidth = 20;
     int sheight = 20;
     int sgap = 2;
-    int length = 51;
+    int length = 50;
 
     QPoint head;
     QList<QPoint> SnakeBody;//point of snake in Topleft
