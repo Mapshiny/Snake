@@ -7,7 +7,9 @@
 #include <QDebug>
 #include <QPainter>
 #include <QKeyEvent>
-
+#include <QtGlobal>
+#include <QTime>
+#include <QtMath>
 namespace Ui {
 class MainGame;
 }
@@ -16,23 +18,29 @@ class MainGame : public QWidget
 {
     Q_OBJECT
 public:
+    void GameInit();
+    bool EatFood();
     explicit MainGame(QWidget *parent = nullptr);
     ~MainGame();
 
 protected:
+    void init();
+    QRect setFood();
     void paintEvent(QPaintEvent *);
     void keyPressEvent(QKeyEvent *);
-//    void keyReleaseEvent(QKeyEvent *);
-    void init();
+    void keyReleaseEvent(QKeyEvent *);
+
 
 protected slots:
-    void testMove();
+    void UpdateGame();
 
 private:
-    int count = 0;
+    int timerInterval = 120;
+    int fwidth = 8;
+    int fheight = 8;
     Snake* snake;
+    QRect food;
     QTimer* timer;
-    enum Move{Up,Down,Left,Right};
     int moveFlag;
     Ui::MainGame *ui;
 };

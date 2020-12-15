@@ -7,6 +7,12 @@
 class Snake
 {
 public:
+    bool isAlive = true;
+
+public:
+    void Init();
+    bool isDead();
+    void getReward();
     void Move(int);
     void MoveLeft();
     void MoveRight();
@@ -14,13 +20,16 @@ public:
     void MoveDown();
     QPoint correctSnake(int, int);
     QPoint getHead();
+    int getWidth();
+    int getHeight();
     QList<QPoint> getBody();
     Snake();
 
 private:
-    qint32 swidth = 20;
-    qint32 sheight = 20;
-    qint32 sgap = 2;
+    int swidth = 20;
+    int sheight = 20;
+    int sgap = 2;
+    int length = 51;
 
     QPoint head;
     QList<QPoint> SnakeBody;//point of snake in Topleft
