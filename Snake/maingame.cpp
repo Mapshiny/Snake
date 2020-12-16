@@ -48,10 +48,19 @@ void MainGame::GameInit() {
     init();
 }
 bool MainGame::EatFood() {
-    int food_center_x = food.topLeft().x() + fwidth;
-    int food_center_y = food.topLeft().y() + fheight;
-    int snake_x = snake->getHead().x();
-    int snake_y = snake->getHead().y();
+    int food_center_x = food.topLeft().x() + fwidth/2;
+    int food_center_y = food.topLeft().y() + fheight/2;
+    QPoint food(food_center_x, food_center_y);
+    int snake_bottom_rightX = snake->getHead().x() + snake->getWidth();
+    int snake_bottom_rightY = snake->getHead().y() + snake->getHeight();
+    QPoint snk(snake_bottom_rightX, snake_bottom_rightY);
+    QRect Snake(snake->getHead(), snk);
+    if(Snake.contains(food, true)) {
+        snake->getReward();
+        return true;
+    }
+    return false;
+    /*
     double r = pow((snake->getWidth()), 2) + pow((0.8 * snake->getWidth()),2);
     double distance = pow(qAbs(food_center_x - snake_x), 2) + pow(qAbs(food_center_y - snake_y), 2);
     if(distance <= (r - 50)) {
@@ -59,6 +68,7 @@ bool MainGame::EatFood() {
         return true;
     }
     return false;
+    */
 }
 QRect MainGame::setFood() {
     int seed = QTime::currentTime().msec();
